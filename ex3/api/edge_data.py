@@ -20,3 +20,5 @@ class egde_data:
 
     def set_weight(self, weight):
         self.weight = weight
+
+

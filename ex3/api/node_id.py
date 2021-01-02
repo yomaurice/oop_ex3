@@ -25,6 +25,8 @@ class node_data:
         self._info=""
         self._tag=0
         node_data.keyCounter+=1
+    def get_node(self,id):
+        return self.get(id)
 
     def get_key(self):
         return self._key
