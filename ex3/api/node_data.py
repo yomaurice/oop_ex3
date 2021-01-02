@@ -1,14 +1,15 @@
 import null as null
 
 
-class node_data:
+class node_id:
     keyCounter=0
 
-    def __init__(self):
+
+    def __init__(self,keyCounter):
         self._key = keyCounter
         self._info = ""
         self.tag = 0
-        node_data.keyCounter+=1
+        node_id.keyCounter+=1
         self.weight = 0.0
         self.srcNi=dict()
         self.destNi=dict()
@@ -17,7 +18,7 @@ class node_data:
         self._key = keyCounter
         self._info = ""
         self.tag = 0
-        node_data.keyCounter+=1
+        node_id.keyCounter+=1
         self.weight = 0.0
         self.srcNi=dict()
         self.destNi=dict()
@@ -26,14 +27,14 @@ class node_data:
         #self._key=key
         self._info=info
         self._tag=tag
-        node_data.keyCounter+=1
+        node_id.keyCounter+=1
         self._weight=weight
         self._pos = pos
     def __init__(self, key):
         self._key=key
         self._info=""
         self._tag=0
-        node_data.keyCounter+=1
+        node_id.keyCounter+=1
 
     def get_key(self):
         return self._key
