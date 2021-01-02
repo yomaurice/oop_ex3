@@ -1,3 +1,6 @@
+import null as null
+
+
 class node_data:
     keyCounter=0
     def __init__(self,keyCounter):
@@ -22,9 +25,6 @@ class node_data:
         self._info=""
         self._tag=0
         node_data.keyCounter+=1
-
-    def get_node(self,i):
-        return self
 
     def get_key(self):
         return self._key
