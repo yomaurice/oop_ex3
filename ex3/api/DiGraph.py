@@ -56,8 +56,8 @@ class DiGraph:
 
     def remove_edge(self, node_id1, node_id2):
         if self.has_edge(node_id1,node_id2):
-            i=self.get_edge(node_id1,node_id2)
-            self.edges.__delattr__(str(i))
+             i=self.get_edge(node_id1,node_id2)
+             self.edges.__delattr__(str(i))
         else:
             return False
     def has_edge(self,src,dest):
