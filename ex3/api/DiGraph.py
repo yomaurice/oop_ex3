@@ -1,5 +1,5 @@
 class DiGraph (GraphInterface):
-    import node_data
+    import node_id
 
 
     def __init__(self):
@@ -26,7 +26,7 @@ class DiGraph (GraphInterface):
 
     def addNode(self, node):
         if not node in vertices.values() and not node is None:
-            node=node_data()
+            node=node_id()
 
             vertices[key]=node
             self.nodeCounter+=1
@@ -34,7 +34,7 @@ class DiGraph (GraphInterface):
 
     def addNode(self,key):
         if not key in vertices.keys():
-            node=node_data(key)
+            node=node_id(key)
             vertices[key]=node
             self.nodeCounter+=1
 
