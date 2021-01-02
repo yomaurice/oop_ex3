@@ -1,7 +1,6 @@
 class DiGraph (GraphInterface):
     import node_id
 
-
     def __init__(self):
         self.vertices=dict()
         self.nodeCounter=0

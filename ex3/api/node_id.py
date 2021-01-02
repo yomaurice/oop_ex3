@@ -4,6 +4,7 @@ import null as null
 class node_id:
     keyCounter=0
 
+
     def __init__(self):
         self._key = keyCounter
         self._info = ""
