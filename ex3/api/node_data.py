@@ -13,6 +13,16 @@ class node_data:
         self.srcNi=dict()
         self.destNi=dict()
 
+    def __init__(self,key,pos):
+        self._key = key
+        self._info = ""
+        self._tag = 0
+        node_data.keyCounter+=1
+        self.weight = 0.0
+        self.srcNi=dict()
+        self.destNi=dict()
+        self._pos=pos
+
     def __init__(self,keyCounter):
         self._key = keyCounter
         self._info = ""
