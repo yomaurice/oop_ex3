@@ -3,8 +3,17 @@ import null as null
 
 class node_data:
     keyCounter=0
-    def __init__(self,keyCounter):
 
+    def __init__(self):
+        self._key = keyCounter
+        self._info = ""
+        self.tag = 0
+        node_data.keyCounter+=1
+        self.weight = 0.0
+        self.srcNi=dict()
+        self.destNi=dict()
+
+    def __init__(self,keyCounter):
         self._key = keyCounter
         self._info = ""
         self.tag = 0
@@ -25,8 +34,6 @@ class node_data:
         self._info=""
         self._tag=0
         node_data.keyCounter+=1
-    def get_node(self,id):
-        return self.get(id)
 
     def get_key(self):
         return self._key
