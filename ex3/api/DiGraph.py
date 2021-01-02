@@ -1,12 +1,17 @@
-class DiGraph:
+class DiGraph (GraphInterface):
+    import node_data
+
+
     def __init__(self):
         self.vertices=dict()
         self.nodeCounter=0
         self.edgeCounter=0
         self.mc=0
+        self.GraphVertices = set()
+        self.edges=set()
 
     def get_node(self,key):
-        if self.vertices.get!=None:
+        if self.vertices.get is not None:
             return self.vertices.get(key)
         else:
             return None
@@ -18,3 +23,18 @@ class DiGraph:
             return None
         else:
             return None
+
+    def addNode(self, node):
+        if not node in vertices.values() and not node is None:
+            node=node_data()
+
+            vertices[key]=node
+            self.nodeCounter+=1
+
+
+    def addNode(self,key):
+        if not key in vertices.keys():
+            node=node_data(key)
+            vertices[key]=node
+            self.nodeCounter+=1
+
