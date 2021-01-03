@@ -23,9 +23,9 @@ class DiGraph:
         else:
             return None
     def add_node(self, node_id, pos):
-        if not key in vertices.keys():
+        if not(node_id in self.vertices.keys()):
             node = node_data(node_id,pos)
-            vertices[node_id] = node
+            self.vertices[node_id] = node
             self.nodeCounter +=1
             return True
         return False
