@@ -108,3 +108,6 @@ class node_data:
     def clear_src(self):
         for x in range (len(self.destNi)):
           del self.destNi[x]
+
+    def __lt__(self, other):
+        return self.weight < other.weight
