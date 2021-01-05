@@ -10,10 +10,17 @@ class DiGraph:
         self.mc=0
 
     def get_node(self, key):
-        if not (self.vertices.get is None):
+        if key in self.vertices.keys():
             return self.vertices.get(key)
         else:
             return None
+
+    def get_node1(self, node):
+        if node in self.vertices.values():
+            return self.vertices.get(node)
+        else:
+            return None
+
     def get_edge(self, src, dest):
         if self.has_edge(src,dest):
             for i in range(len(self.edges)):

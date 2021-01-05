@@ -1,6 +1,7 @@
 from typing import List
 
-from ex3 import GraphInterface
+#from ex3 import GraphInterface
+from api import GraphInterface
 
 
 class GraphAlgoInterface:
