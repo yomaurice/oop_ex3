@@ -3,23 +3,23 @@ from api import node_data
 #import heapq
 import json
 from queue import PriorityQueue
-
 from api.GraphAlgoInterface import GraphAlgoInterface
 
 
 class GraphAlgo(GraphAlgoInterface):
+    # node: node_data # - define type of node
 
     def __init__(self):
-        self.fathers = dict({node_data:node_data})
-        self.gr=DiGraph
-        self.nodeCounter=0
+        self.fathers = dict({node_data: node_data})
+        self.gr = DiGraph
+        self.nodeCounter = 0
 
     def get_graph(self):
         return self.gr
 
     def dijkstra(self, src):
         self.fathers.update({src: None})
-        src_weight= self.gr.DiGraph.get_node1(src).node_data.get_weight()
+        src_weight = self.gr.DiGraph.get_node1(src).node_data.get_weight()
         for i in self.gr.DiGraph.get_all_v():
             self.gr.DiGraph.get_node(i).set_weight(float('inf'))
             self.gr.DiGraph.add_node(i).set_info("unvisited")
@@ -50,7 +50,7 @@ class GraphAlgo(GraphAlgoInterface):
         else:
             st=[]
             self.dijkstra(src)
-            dest = self.gr.get_node(id2)
+            dest = self.gr.DiGraph.get_node(id2)
             while not (dest is None):
                 st.append(dest)
                 dest = self.fathers.get(dest)
