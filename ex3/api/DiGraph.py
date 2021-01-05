@@ -1,13 +1,15 @@
 from api import edge_data
 from api import node_data
 
+
 class DiGraph:
+
     def __init__(self):
-        self.vertices=dict()
-        self.edges=list
-        self.nodeCounter=0
-        self.edgeCounter=0
-        self.mc=0
+        self.vertices = dict()
+        self.edges = list()
+        self.nodeCounter = 0
+        self.edgeCounter = 0
+        self.mc = 0
 
     def get_node(self, key):
         if key in self.vertices.keys():
@@ -22,18 +24,19 @@ class DiGraph:
             return None
 
     def get_edge(self, src, dest):
-        if self.has_edge(src,dest):
-            for i in range(len(self.edges)):
-                if i.get_dest==dest and i.get_src==src:
+        if self.has_edge(src, dest):
+            for i in self.edges:
+                if i.get_dest_node() == dest and i.get_src_node() == src:
                     return i
             return None
         else:
             return None
-    def add_node(self, node_id, pos):
+
+    def add_node(self, node_id):
         if not(node_id in self.vertices.keys()):
-            node = node_data(node_id,pos)
+            node = node_data.NodeData(node_id)
             self.vertices[node_id] = node
-            self.nodeCounter +=1
+            self.nodeCounter += 1
             return True
         return False
 
@@ -58,27 +61,28 @@ class DiGraph:
     def add_edge(self, id1, id2, weight):
         if not(id1 in self.vertices) and not(id2 in self.vertices):
             return False
-        edge=edge_data(id1,id2,weight)
+        edge = edge_data.EgdeData(id1, id2, weight)
         if edge in self.edges:
             return False
         else:
             self.edges.append(edge)
 
     def remove_node(self, node_id):
-         if not(node_id in self.vertices):
-             return False
-         else:
-             self.vertices.__delattr__(str(node_id))
+        if not(node_id in self.vertices):
+            return False
+        else:
+            self.vertices.__delattr__(str(node_id))
 
     def remove_edge(self, node_id1, node_id2):
-        if self.has_edge(node_id1,node_id2):
-             i=self.get_edge(node_id1,node_id2)
-             self.edges.__delattr__(str(i))
+        if self.has_edge(node_id1, node_id2):
+            i = self.get_edge(node_id1, node_id2)
+            self.edges.__delattr__(str(i))
         else:
             return False
-    def has_edge(self,src,dest):
-        for i in range(len(self.edges)):
-            i = self.edges.get(i)
-            if i.get_src_node==src and i.get_dest_node==dest:
+
+    def has_edge(self, src, dest):
+        for i in self.edges:
+            #edge = self.edges[i]
+            if i.get_src_node == src and i.get_dest_node == dest:
                 return True
         return False

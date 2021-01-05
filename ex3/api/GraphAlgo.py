@@ -9,7 +9,7 @@ from api.GraphAlgoInterface import GraphAlgoInterface
 class GraphAlgo(GraphAlgoInterface):
     # node: node_data # - define type of node
 
-    def __init__(self):
+    def __init__(self, g):
         self.fathers = dict({node_data: node_data})
         self.gr = DiGraph
         self.nodeCounter = 0
@@ -44,7 +44,7 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def shortest_path(self, id1, id2):
-        src = self.gr.DiGraph.get_node(id1)
+        src = self.gr.DiGraph.get_node(self, id1)
         if src is None:
             return None
         else:
