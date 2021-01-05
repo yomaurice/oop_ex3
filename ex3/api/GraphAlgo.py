@@ -15,27 +15,29 @@ class GraphAlgo:
 
     def dijkstra(self,node):
         self.fathers[node]=None
-        for i in self.gr.vertices:
-            self.gr.vertices(i).set_weight(float('inf'))
-            self.gr.vertices(i).set_info("unvisited")
-        q=list[node.weight,node()]
+        for i in self.gr.DiGraph.get_all_v():
+            self.gr.DiGraph.get_node(i).set_weight(float('inf'))
+            self.gr.DiGraph.add_node(i).set_info("unvisited")
+        q=list[node]
         node.set_info("visiting")
         node.set_weight(0)
-        heapq.heappush(q,(node.weight*(-1),node))
+        heapq.heappush(q ,node)
         self.nodeCounter+=1
         while not q:
             top=heapq.heappop(q)
-            top=top[0]
-            top.set_info
-            Ni=top[1].get_Ni
-            for i in Ni:
-                if Ni(i).get_info=="unvisited":
-                    heapq.heappush(q,(Ni(i).weight*(-1),Ni(i)))
+        #    top=top[0]
+            top.set_info("visited")
+            ni=top.get_Ni
+            for i in ni:
+                if ni(i).get_info=="unvisited":
+                    heapq.heappush(q,(ni(i)))
                     self.nodeCounter+=1
-                    Ni(i).set_info("visiting")
-                if Ni(i).weight>top.weight+self.gr.get_edge(top.get_key,Ni(i).get_key).get_weight:
-                    Ni(i).set_weight(top.weight+self.gr.get_edge(top.get_key,Ni(i).get_key).get_weight)
-                    self.fathers[Ni(i)]=top
+                    ni(i).set_info("visiting")
+                if ni(i).weight>top.weight+self.gr.DiGraph.get_edge(top.get_key,ni(i).get_key).get_weight:
+                    ni(i).set_weight(top.weight+self.gr.DiGraph.get_edge(top.get_key,ni(i).get_key).get_weight)
+                    self.fathers[ni(i)]=top
+        return True
+
 
    '''
     def BFS(self,node):
@@ -59,19 +61,22 @@ class GraphAlgo:
     '''
 
     def shortest_path(self, id1, id2):
-        if not(self.gr.get_node(id1)==None):
+        src = self.gr.DiGraph.get_node(id1)
+        if src is None:
+            return None
+        else:
             st=[]
-            src=self.gr.get_node(id1)
-            dijkstra(node)
+            dijkstra(src)
             dest=self.gr.get_node(id2)
-            while not dest==None:
+            while not dest is None:
                 st.append(dest)
                 dest=self.fathers.get(dest)
             li=[]
             while not st:
                 li.append(st.pop)
             return li
-        return None
+
+
     def load_from_json(self, file_name):
         with open(file_name) as f:
             data=json.load(f)
