@@ -2,7 +2,7 @@ from api import edge_data
 from api import node_data
 
 
-class DiGraph:
+class DiGraph (GraphInterface):
 
     def __init__(self):
         self.vertices = dict()

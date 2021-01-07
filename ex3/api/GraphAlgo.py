@@ -2,6 +2,7 @@ from api import DiGraph
 from api import node_data
 #import heapq
 import json
+from api.DiGraph import DiGraph
 from queue import PriorityQueue
 from api.GraphAlgoInterface import GraphAlgoInterface
 
@@ -11,7 +12,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self, g):
         self.fathers = dict({node_data: node_data})
-        self.gr = DiGraph
+        self.gr = DiGraph()
         self.nodeCounter = 0
 
     def get_graph(self):
@@ -57,7 +58,9 @@ class GraphAlgo(GraphAlgoInterface):
             li = []
             while not st:
                 li.append(st.pop)
-            return li
+            dist = self.gr.DiGraph.get_node(id2).node_data.get_weight()
+            res = (dist,li)
+            return res
 
     def load_from_json(self, file_name):
         with open(file_name) as f:
