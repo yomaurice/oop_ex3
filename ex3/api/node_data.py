@@ -1,13 +1,13 @@
 
 
 class NodeData:
-    keyCounter = 0
+   # keyCounter = 0
 
-    def __init__(self, key_counter):
-        self._key = key_counter
+    def __init__(self, id):
+        self._key = id
         self._info = ""
         self._tag = 0
-        NodeData.keyCounter += 1
+       # NodeData.keyCounter += 1
         self._weight = 0.0
         self.srcNi = dict()
         self.destNi = dict()
@@ -94,7 +94,7 @@ class NodeData:
             self.destNi.pop(t)
 
     def clear_src(self):
-        for x in range (len(self.srcNi)):
+        for x in self.srcNi:
             del self.srcNi[x]
 
     def __lt__(self, other):

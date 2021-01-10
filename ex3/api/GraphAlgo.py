@@ -10,7 +10,7 @@ from api.GraphAlgoInterface import GraphAlgoInterface
 class GraphAlgo(GraphAlgoInterface):
     # node: node_data # - define type of node
 
-    def __init__(self, g):
+    def __init__(self, g = None):
         self.fathers = dict({node_data: node_data})
         self.gr = DiGraph()
         self.nodeCounter = 0
@@ -20,10 +20,10 @@ class GraphAlgo(GraphAlgoInterface):
 
     def dijkstra(self, src):
         self.fathers.update({src: None})
-        src_weight = self.gr.DiGraph.get_node1(src).node_data.get_weight()
-        for i in self.gr.DiGraph.get_all_v():
-            self.gr.DiGraph.get_node(i).set_weight(float('inf'))
-            self.gr.DiGraph.add_node(i).set_info("unvisited")
+        src_weight = self.gr.get_node1(src).node_data.get_weight()
+        for i in self.gr.get_all_v():
+            self.gr.get_node(i).set_weight(float('inf'))
+            self.gr.get_node(i).set_info("unvisited")
         # q=list[node]
         q = PriorityQueue()
         src.set_info("visiting")
@@ -45,34 +45,39 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def shortest_path(self, id1, id2):
-        src = self.gr.DiGraph.get_node(self, id1)
+        src = self.gr.get_node(id1)
         if src is None:
             return None
         else:
             st=[]
             self.dijkstra(src)
-            dest = self.gr.DiGraph.get_node(id2)
+            dest = self.gr.get_node(id2)
             while not (dest is None):
                 st.append(dest)
                 dest = self.fathers.get(dest)
             li = []
             while not st:
                 li.append(st.pop)
-            dist = self.gr.DiGraph.get_node(id2).node_data.get_weight()
+            dist = self.gr.get_node(id2).node_data.get_weight()
             res = (dist,li)
             return res
 
     def load_from_json(self, file_name):
         with open(file_name) as f:
             data = json.load(f)
-        for node in data['nodes']:
+        for node in data['Nodes']:
             self.gr.vertices.update(node)
-        for edge in data['edges']:
+        for edge in data['Edges']:
             self.gr.edges.append(edge)
 
     def save_to_json(self, file_name):
         with open(file_name) as f:
-         json.dump(self.gr.vertices+self.gr.edges)
+            for ver in self.gr.vertices.keys():
+                json.dump(ver)
+            for ed in self.gr.edges:
+                json.dump(ed.get_src_node())
+                json.dump(ed.get_dest_node())
+                json.dump(ed.get_wight())
         return file_name
 
     def connected_component(self, id1: int):

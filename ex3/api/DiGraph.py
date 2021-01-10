@@ -1,5 +1,6 @@
 from api import edge_data
 from api import node_data
+from api.GraphInterface import GraphInterface
 
 
 class DiGraph (GraphInterface):
@@ -32,7 +33,7 @@ class DiGraph (GraphInterface):
         else:
             return None
 
-    def add_node(self, node_id):
+    def add_node(self, node_id, pos: tuple = None):
         if not(node_id in self.vertices.keys()):
             node = node_data.NodeData(node_id)
             self.vertices[node_id] = node
@@ -71,12 +72,15 @@ class DiGraph (GraphInterface):
         if not(node_id in self.vertices):
             return False
         else:
-            self.vertices.__delattr__(str(node_id))
+            i = self.vertices.get(node_id)
+            # self.vertices.__delattr__(str(node_id))
+            del i
 
     def remove_edge(self, node_id1, node_id2):
         if self.has_edge(node_id1, node_id2):
             i = self.get_edge(node_id1, node_id2)
-            self.edges.__delattr__(str(i))
+           # self.edges.__delattr__(str(i))
+            del i
         else:
             return False
 
