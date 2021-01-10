@@ -89,6 +89,35 @@ class GraphAlgo(GraphAlgoInterface):
     def plot_graph(self):
         return None
 
+    def DFS(self, node):
+        for n in self.gr.vertices:
+            n.set_tag(-1)
+            n.set_info("unvisited")
+        stack = []
+        node.set_info("visiting")
+        stack.append(node)
+        node.set_tag(0)
+        while not (len(stack) == 0):
+            top = stack.pop()
+            top.set_info("visited")
+            ni = top.get_Ni()
+            for i in ni:
+                if ni(i).get_info == "unvisited":
+                    stack.append(ni(i))
+                    ni(i).set_info("visiting")
+
+    def ReversGraph(self):
+        new_graph: DiGraph  # define new graph type
+        edge: edge_data
+        new_graph = DiGraph()
+        for node in self.gr.DiGraph.get_all_v():
+            new_graph.add_node(node)
+        for edge in self.gr.get_edges():
+            src = edge.get_src_node()
+            dest = edge.get_dest_node()
+            w = edge.get_weight()
+            new_graph.add_edge(src, dest, w)
+        return new_graph
 
 
 '''def dijkstra(self,node):
