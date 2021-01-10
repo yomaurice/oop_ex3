@@ -1,3 +1,5 @@
+import random
+
 from api import edge_data
 from api import node_data
 from api.GraphInterface import GraphInterface
@@ -36,6 +38,14 @@ class DiGraph (GraphInterface):
     def add_node(self, node_id, pos: tuple = None):
         if not(node_id in self.vertices.keys()):
             node = node_data.NodeData(node_id)
+            if not (pos is None):
+                node.set_location(pos)
+            else:
+                x = (random.randrange(350000000000, 360000000000)/10000000000)
+                y = (random.randrange(320000000000, 330000000000)/10000000000)
+                z = 0
+                pos1 = (x, y, z)
+                node.set_location(pos1)
             self.vertices[node_id] = node
             self.nodeCounter += 1
             return True
@@ -79,14 +89,17 @@ class DiGraph (GraphInterface):
     def remove_edge(self, node_id1, node_id2):
         if self.has_edge(node_id1, node_id2):
             i = self.get_edge(node_id1, node_id2)
-           # self.edges.__delattr__(str(i))
+            # self.edges.__delattr__(str(i))
             del i
         else:
             return False
 
     def has_edge(self, src, dest):
         for i in self.edges:
-            #edge = self.edges[i]
+            # edge = self.edges[i]
             if i.get_src_node == src and i.get_dest_node == dest:
                 return True
         return False
+
+    def get_edges(self):
+        return self.edges

@@ -1,16 +1,17 @@
 
 
 class NodeData:
-   # keyCounter = 0
+    # keyCounter = 0
 
     def __init__(self, id):
         self._key = id
         self._info = ""
         self._tag = 0
-       # NodeData.keyCounter += 1
+        # NodeData.keyCounter += 1
         self._weight = 0.0
         self.srcNi = dict()
         self.destNi = dict()
+
     '''
     def __init__(self, key, pos):
         self._key = key
