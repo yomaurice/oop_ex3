@@ -81,30 +81,50 @@ class GraphAlgo(GraphAlgoInterface):
         return file_name
 
     def connected_component(self, id1: int):
+        if id1 in self.gr.vertices:
+            result = []
+            list = connected_components()
+            for l1 in list:
+                if id1 in list(l1):
+                    result = list(l1)
+            return result
         return None
 
     def connected_components(self):
+        if not self.gr is None:
+            vertex = self.gr.vertices
+            src = vertex(0)
+            list = dfs(src)
+            ReversGraph()
+            for n in self.gr.vertices:
+                n.set_info("unvisited")
+            all_scc = []
+            for i in list:
+                if self.gr.get_node1(i).node_data.get_info()=="unvisited":
+                    temp_list = dfs(self.gr.get_node1(i))
+                    all_scc.append(temp_list)
+            return all_scc
         return None
 
     def plot_graph(self):
         return None
 
-    def DFS(self, node):
+    def dfs(self, node):
         for n in self.gr.vertices:
-            n.set_tag(-1)
             n.set_info("unvisited")
-        stack = []
-        node.set_info("visiting")
-        stack.append(node)
-        node.set_tag(0)
-        while not (len(stack) == 0):
-            top = stack.pop()
-            top.set_info("visited")
+        result=[]
+        s = Stack()
+        s.add(node)
+        while not s.is_empty():
+            current_node = s.pop()
+            result.append(current_node)
+            print(current_node)
+            current_node.set_info("visited")
             ni = top.get_Ni()
             for i in ni:
-                if ni(i).get_info == "unvisited":
-                    stack.append(ni(i))
-                    ni(i).set_info("visiting")
+                if Ni(i).get_info == "unvisited":
+                    s.add(neighbour)
+        return result
 
     def ReversGraph(self):
         new_graph: DiGraph  # define new graph type
@@ -163,3 +183,30 @@ class GraphAlgo(GraphAlgoInterface):
                     q.append(Ni(i))
                     self.nodeCounter += 1
                     Ni(i).set_info("visiting")'''
+
+'''def DFS(self, node):
+    for n in self.gr.vertices:
+        n.set_tag(-1)
+        n.set_info("unvisited")
+    stack = []
+    node.set_info("visiting")
+    stack.append(node)
+    #d1.append(node)
+    #node.set_tag(0)
+    def DFS(self, node):
+    for n in self.gr.vertices:
+        n.set_tag(-1)
+        n.set_info("unvisited")
+    stack = []
+    node.set_info("visiting")
+    stack.append(node)
+    node.set_tag(0)
+    while not (len(stack)==0):
+        top = stack.pop()
+        top.set_info("visited")
+        ni = top.get_Ni()
+        for i in ni:
+            if ni(i).get_info == "unvisited":
+                stack.append(ni(i))
+                ni(i).set_info("visiting")
+    '''
