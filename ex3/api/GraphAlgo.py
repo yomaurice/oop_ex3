@@ -20,7 +20,6 @@ class GraphAlgo(GraphAlgoInterface):
 
     def dijkstra(self, src):
         self.fathers.update({src: None})
-        src_weight = src.get_weight()
         for i in self.gr.get_all_v():
             self.gr.get_node(i).set_weight(float('inf'))
             self.gr.get_node(i).set_info("unvisited")
@@ -28,21 +27,26 @@ class GraphAlgo(GraphAlgoInterface):
         q = PriorityQueue()
         src.set_info("visiting")
         src.set_weight(0)
-        q.put((src_weight, src))
+        q.put((src))
         self.nodeCounter += 1
         while not q.empty():
             top = q.get()
-            nod = top[1]
-            nod.set_info("visited")
-            ni = nod.get_src_Ni()
+            #nod = top(1)
+            #nod.set_info("visited")
+            ni = top.get_src_Ni()
             for i in ni:
                 if i.get_info() == "unvisited":
-                    q.put(i.get_weight(), i)
+                    q.put(i)
                     self.nodeCounter += 1
                     i.set_info("visiting")
-                if i.get_weight() > nod.get_weight()+self.gr.get_edge(nod.get_key(), i.get_key()).get_weight():
-                    i.set_weight(nod.weight()+self.gr.get_edge(nod.get_key(), i.get_key()).get_weight())
-                    self.fathers[i] = nod
+                    nod_weight=top.get_weight()
+                    i_weight=i.get_weight()
+                    src_edge=top.get_key()
+                    dest_edge=i.get_key()
+                    edge_w=self.gr.get_edge(src_edge,dest_edge ).get_weight()
+                if i_weight > nod_weight+edge_w:
+                    i.set_weight(nod_weight+edge_w)
+                    self.fathers[i] = top
         return True
 
     def shortest_path(self, id1, id2):
@@ -67,7 +71,7 @@ class GraphAlgo(GraphAlgoInterface):
         with open(file_name) as f:
             data = json.load(f)
         for node in data['Nodes']:
-            self.gr.vertices[self.gr.nodeCounter] = node_data.NodeData()
+            self.gr.vertices[self.gr.nodeCounter] = node_data.NodeData(node['id'])
             self.gr.nodeCounter += 1
         for edge in data['Edges']:
             src = edge['src']

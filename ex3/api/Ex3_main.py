@@ -60,7 +60,6 @@ def check1():
     print(g_algo.shortest_path(3, 1))
     g_algo.save_to_json(file+'_saved')
     g_algo.plot_graph()
-
 def check2():
     """ This function tests the naming, basic testing over A5 json file.
       :return:
