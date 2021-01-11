@@ -20,7 +20,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def dijkstra(self, src):
         self.fathers.update({src: None})
-        src_weight = self.gr.get_node1(src).node_data.get_weight()
+        src_weight = src.get_weight()
         for i in self.gr.get_all_v():
             self.gr.get_node(i).set_weight(float('inf'))
             self.gr.get_node(i).set_info("unvisited")
@@ -32,16 +32,17 @@ class GraphAlgo(GraphAlgoInterface):
         self.nodeCounter += 1
         while not q.empty():
             top = q.get()
-            top.set_info("visited")
-            ni = top.get_Ni
+            nod = top[1]
+            nod.set_info("visited")
+            ni = nod.get_src_Ni()
             for i in ni:
-                if ni(i).get_info == "unvisited":
-                    q.put((ni(i)).get_weight(), (ni(i)))
+                if i.get_info() == "unvisited":
+                    q.put(i.get_weight(), i)
                     self.nodeCounter += 1
-                    ni(i).set_info("visiting")
-                if ni(i).weight > top.weight+self.gr.get_edge(top.get_key, ni(i).get_key).get_weight:
-                    ni(i).set_weight(top.weight+self.gr.get_edge(top.get_key, ni(i).get_key).get_weight)
-                    self.fathers[ni(i)] = top
+                    i.set_info("visiting")
+                if i.get_weight() > nod.get_weight()+self.gr.get_edge(nod.get_key(), i.get_key()).get_weight():
+                    i.set_weight(nod.weight()+self.gr.get_edge(nod.get_key(), i.get_key()).get_weight())
+                    self.fathers[i] = nod
         return True
 
     def shortest_path(self, id1, id2):
@@ -66,15 +67,20 @@ class GraphAlgo(GraphAlgoInterface):
         with open(file_name) as f:
             data = json.load(f)
         for node in data['Nodes']:
-            self.gr.vertices.update(node)
+            self.gr.vertices[self.gr.nodeCounter] = node_data.NodeData()
+            self.gr.nodeCounter += 1
         for edge in data['Edges']:
-            self.gr.edges.append(edge)
+            src = edge['src']
+            dest = edge['dest']
+            w = edge['w']
+            self.gr.add_edge(src, dest, w)
+           # self.gr.edges.append(edge['src'], edge['dest'], edge['w'])
+            self.gr.edgeCounter += 1
 
     def save_to_json(self, file_name):
         with open(file_name) as f:
             ver_dic = dict()
             for ver in self.gr.vertices.keys():
-                ver_dic['pos'] = ver.get_location
                 ver_dic['key'] = ver.get_key
             # json.dumps(ver_dic)
             ver_list = []
@@ -83,8 +89,8 @@ class GraphAlgo(GraphAlgoInterface):
             edge_dict = dict()
             for ed in self.gr.edges:
                 edge_dict['src'] = ed.get_src_node
-                edge_dict['w'] = ed.get_wight
                 edge_dict['dest'] = ed.get_dest_node
+                edge_dict['w'] = ed.get_wight
                 # json.dumps(ed.get_src_node())
                 # json.dumps(ed.get_dest_node())
                 # json.dumps(ed.get_wight())
@@ -97,7 +103,7 @@ class GraphAlgo(GraphAlgoInterface):
             json.dumps(json_dict)
         return file_name
 
-    def connected_component(self, id1: int):
+    def connected_component(self, id1):
         if id1 in self.gr.vertices:
             result = []
             list_components = self.connected_components()
@@ -109,17 +115,17 @@ class GraphAlgo(GraphAlgoInterface):
         return None
 
     def connected_components(self):
-        if not (self.gr is None):
+        if self.gr is not None:
             vertex = self.gr.vertices
-            src = vertex(0)
+            src = vertex.get(0)
             list_comp = self.dfs(src)
             self.ReversGraph()
-            for n in self.gr.vertices:
+            for n in self.gr.vertices.values():
                 n.set_info("unvisited")
             all_scc = []
             for i in list_comp:
-                if self.gr.get_node1(i).node_data.get_info() == "unvisited":
-                    temp_list = self.dfs(self.gr.get_node1(i))
+                if i.get_info() == "unvisited":
+                    temp_list = self.dfs(i)
                     all_scc.append(temp_list)
             return all_scc
         return None
@@ -128,20 +134,20 @@ class GraphAlgo(GraphAlgoInterface):
         return None
 
     def dfs(self, node):
-        for n in self.gr.vertices:
+        for n in self.gr.vertices.values():
             n.set_info("unvisited")
         result = []
         stack = []
         stack.append(node)
-        while not len(stack) == 0:
+        while stack:
             current_node = stack.pop()
             result.append(current_node)
             print(current_node)
             current_node.set_info("visited")
-            ni = current_node.get_Ni()
-            for i in ni:
-                if ni(i).get_info == "unvisited":
-                    stack.append(ni(i))
+            ni = current_node.get_src_Ni()
+            for nod in ni:
+                if nod.get_info == "unvisited":
+                    stack.append(nod)
         return result
 
     def ReversGraph(self):

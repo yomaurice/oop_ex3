@@ -45,6 +45,7 @@ def check0():
     print(g.all_out_edges_of_node(1))
     g_algo = GraphAlgo(g)
     print(g_algo.shortest_path(0, 3))
+    print('end check 0')
 
 def check1():
     """

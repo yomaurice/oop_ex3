@@ -1,42 +1,17 @@
 
 
 class NodeData:
-    # keyCounter = 0
+    keyCounter = 0
 
-    def __init__(self, id):
-        self._key = id
+    def __init__(self, key = keyCounter, pos = None, info = "", tag = 0, weight = 0.0):
+        self._key = key
         self._info = ""
         self._tag = 0
-        # NodeData.keyCounter += 1
+        NodeData.keyCounter += 1
         self._weight = 0.0
         self.srcNi = dict()
         self.destNi = dict()
 
-    '''
-    def __init__(self, key, pos):
-        self._key = key
-        self._info = ""
-        self._tag = 0
-        NodeData.keyCounter += 1
-        self._weight = 0.0
-        self.srcNi=dict()
-        self.destNi=dict()
-        self._pos=pos
-
-    def __init__(self, info, tag, weight, pos):
-        #self._key=key
-        self._info = info
-        self._tag = tag
-        NodeData.keyCounter += 1
-        self._weight = weight
-        self._pos = pos
-
-    def __init__(self, key):
-        self._key = key
-        self._info = ""
-        self._tag = 0
-        NodeData.keyCounter += 1
-    '''
     def get_key(self):
         return self._key
 
@@ -100,3 +75,17 @@ class NodeData:
 
     def __lt__(self, other):
         return self._weight < other._weight
+
+    def add_srcNi(self,id):
+        if len(self.srcNi) == 0:
+            self.srcNi[0]=id
+        else:
+            i = len(self.srcNi)
+            self.srcNi[i]=id
+
+    def add_destNi(self,id):
+        if len(self.destNi) == 0:
+            self.destNi[0]=id
+        else:
+            i = len(self.destNi)
+            self.destNi[i]=id

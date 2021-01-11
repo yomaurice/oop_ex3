@@ -35,10 +35,10 @@ class DiGraph (GraphInterface):
         else:
             return None
 
-    def add_node(self, node_id, pos: tuple = None):
+    def add_node(self, node_id, pos=None):
         if not(node_id in self.vertices.keys()):
             node = node_data.NodeData(node_id)
-            if not (pos is None):
+            if pos is not None:
                 node.set_location(pos)
             else:
                 x = (random.randrange(350000000000, 360000000000)/10000000000)
@@ -77,6 +77,10 @@ class DiGraph (GraphInterface):
             return False
         else:
             self.edges.append(edge)
+            self.edgeCounter += 1
+            self.vertices.get(id1).add_srcNi(self.vertices.get(id2))
+            self.vertices.get(id2).add_destNi(self.vertices.get(id1))
+            return True
 
     def remove_node(self, node_id):
         if not(node_id in self.vertices):
@@ -90,14 +94,13 @@ class DiGraph (GraphInterface):
         if self.has_edge(node_id1, node_id2):
             i = self.get_edge(node_id1, node_id2)
             # self.edges.__delattr__(str(i))
-            del i
+            self.edges.remove(i)
         else:
             return False
 
     def has_edge(self, src, dest):
         for i in self.edges:
-            # edge = self.edges[i]
-            if i.get_src_node == src and i.get_dest_node == dest:
+            if i.get_src_node() == src and i.get_dest_node() == dest:
                 return True
         return False
 
