@@ -95,6 +95,7 @@ class DiGraph (GraphInterface):
             i = self.get_edge(node_id1, node_id2)
             # self.edges.__delattr__(str(i))
             self.edges.remove(i)
+            self.edgeCounter -=1
         else:
             return False
 

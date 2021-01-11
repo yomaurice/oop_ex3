@@ -12,8 +12,11 @@ class GraphAlgo(GraphAlgoInterface):
 
     def __init__(self, g=None):
         self.fathers = dict({node_data: node_data})
-        self.gr = DiGraph()
         self.nodeCounter = 0
+        if g == None:
+            self.gr = DiGraph()
+        else:
+            self.gr=g
 
     def get_graph(self):
         return self.gr
@@ -57,13 +60,13 @@ class GraphAlgo(GraphAlgoInterface):
             st = []
             self.dijkstra(src)
             dest = self.gr.get_node(id2)
-            while not (dest is None):
+            while not (dest == src) and not st:
                 st.append(dest)
                 dest = self.fathers.get(dest)
             li = []
             while not st:
                 li.append(st.pop)
-            dist = self.gr.get_node(id2).node_data.get_weight()
+            dist = self.gr.get_node(id2).get_weight()
             res = (dist, li)
             return res
 
@@ -85,16 +88,16 @@ class GraphAlgo(GraphAlgoInterface):
         with open(file_name) as f:
             ver_dic = dict()
             for ver in self.gr.vertices.keys():
-                ver_dic['key'] = ver.get_key
+                ver_dic['key'] = ver
             # json.dumps(ver_dic)
             ver_list = []
             for v in ver_dic:
                 ver_list.append(v)
             edge_dict = dict()
             for ed in self.gr.edges:
-                edge_dict['src'] = ed.get_src_node
-                edge_dict['dest'] = ed.get_dest_node
-                edge_dict['w'] = ed.get_wight
+                edge_dict['src'] = ed.get_src_node()
+                edge_dict['dest'] = ed.get_dest_node()
+                edge_dict['w'] = ed.get_weight()
                 # json.dumps(ed.get_src_node())
                 # json.dumps(ed.get_dest_node())
                 # json.dumps(ed.get_wight())
