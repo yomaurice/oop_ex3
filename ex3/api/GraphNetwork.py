@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from networkx.readwrite import json_graph
 
 g = nx.Graph()
-json_graph.no
 g.add_node(5)
 g.add_edge(1, 2)
 g.add_edge(2, 3)
