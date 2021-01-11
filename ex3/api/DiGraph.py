@@ -95,7 +95,7 @@ class DiGraph (GraphInterface):
             i = self.get_edge(node_id1, node_id2)
             # self.edges.__delattr__(str(i))
             self.edges.remove(i)
-            self.edgeCounter -=1
+            self.edgeCounter -= 1
         else:
             return False
 
@@ -107,3 +107,9 @@ class DiGraph (GraphInterface):
 
     def get_edges(self):
         return self.edges
+
+    '''def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        return "Graph: |V|=", self.nodeCounter, "|E|=", self.edgeCounter'''

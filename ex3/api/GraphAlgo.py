@@ -5,6 +5,7 @@ import json
 from api.DiGraph import DiGraph
 from queue import PriorityQueue
 from api.GraphAlgoInterface import GraphAlgoInterface
+import matplotlib.pyplot as plt
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -13,10 +14,10 @@ class GraphAlgo(GraphAlgoInterface):
     def __init__(self, g=None):
         self.fathers = dict({node_data: node_data})
         self.nodeCounter = 0
-        if g == None:
+        if g is None:
             self.gr = DiGraph()
         else:
-            self.gr=g
+            self.gr = g
 
     def get_graph(self):
         return self.gr
@@ -30,7 +31,7 @@ class GraphAlgo(GraphAlgoInterface):
         q = PriorityQueue()
         src.set_info("visiting")
         src.set_weight(0)
-        q.put((src))
+        q.put(src)
         self.nodeCounter += 1
         while not q.empty():
             top = q.get()
@@ -43,7 +44,7 @@ class GraphAlgo(GraphAlgoInterface):
                     self.nodeCounter += 1
                     i.set_info("visiting")
                     nod_weight=top.get_weight()
-                    i_weight=i.get_weight()
+                    i_weight = i.get_weight()
                     src_edge=top.get_key()
                     dest_edge=i.get_key()
                     edge_w=self.gr.get_edge(src_edge,dest_edge ).get_weight()
@@ -74,8 +75,9 @@ class GraphAlgo(GraphAlgoInterface):
         with open(file_name) as f:
             data = json.load(f)
         for node in data['Nodes']:
-            self.gr.vertices[self.gr.nodeCounter] = node_data.NodeData(node['id'])
-            self.gr.nodeCounter += 1
+            self.gr.add_node(node['id'])
+            # self.gr.vertices[self.gr.nodeCounter] = node_data.NodeData(node['id'])
+            # self.gr.nodeCounter += 1
         for edge in data['Edges']:
             src = edge['src']
             dest = edge['dest']
@@ -138,6 +140,25 @@ class GraphAlgo(GraphAlgoInterface):
         return None
 
     def plot_graph(self):
+        for vert in self.gr.get_all_v():
+            p = self.gr.get_node(vert).get_location()
+            x = p[0]
+            y = p[1]
+            plt.plot(x, y, color='blue', marker='o')
+        for edge in self.gr.edges:
+            src = edge.get_src_node()
+            p_src = self.gr.get_node(src).get_location()
+            x1 = p_src[0]
+            y1 = p_src[1]
+            dest = edge.get_dest_node()
+            p_dest = self.gr.get_node(dest).get_location()
+            x2 = p_dest[0]
+            y2 = p_dest[1]
+            plt.plot([x1, x2], [y1, y2], color='red')
+            # plt.arrow(x1, y1, x2-x1, y2-y1, color='red', head_width=0.05, head_length=0.05, fc='k')
+        plt.show()
+
+
         return None
 
     def dfs(self, node):
