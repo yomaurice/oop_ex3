@@ -26,6 +26,7 @@ class GraphAlgo(GraphAlgoInterface):
         self.fathers.update({src: None})
         for i in self.gr.vertices:
             self.gr.get_node(i).set_weight(float('inf'))
+            # self.fathers[i] = None
             self.gr.get_node(i).set_info("unvisited")
         # q=list[node]
         q = PriorityQueue()
@@ -128,16 +129,18 @@ class GraphAlgo(GraphAlgoInterface):
     def connected_components(self):
         if self.gr is not None:
             vertex = self.gr.vertices
-            src = vertex.get(0)
+            src = vertex.get(0).get_key()
             list_comp = self.dfs(src)
             self.ReversGraph()
-            for n in self.gr.vertices.values():
+            for n in self.gr.vertices.values():  # i need to check if we need this
                 n.set_info("unvisited")
             all_scc = []
             for i in list_comp:
-                if i.get_info() == "unvisited":
-                    temp_list = self.dfs(i)
+                n = self.gr.get_node(i)
+                if n.get_info() == "unvisited":
+                    temp_list = self.dfs(n.get_key())
                     all_scc.append(temp_list)
+            self.ReversGraph()
             return all_scc
         return None
 
@@ -160,24 +163,29 @@ class GraphAlgo(GraphAlgoInterface):
             # plt.arrow(x1, y1, x2-x1, y2-y1, color='red', head_width=0.05, head_length=0.05, fc='k')
         plt.show()
 
-
-        return None
-
-    def dfs(self, node):
+    def dfs(self, n_id):
+        node = self.gr.get_node(n_id)
         for n in self.gr.vertices.values():
             n.set_info("unvisited")
-        result = []
         stack = []
+        result = []
         stack.append(node)
+        result.append(node.get_key())
+        node.set_info("visited")
         while stack:
             current_node = stack.pop()
-            result.append(current_node)
-            print(current_node)
-            current_node.set_info("visited")
+            stack.append(current_node)
+            # print(current_node)
             ni = current_node.get_src_Ni()
             for nod in ni:
                 if nod.get_info == "unvisited":
                     stack.append(nod)
+                    nod.set_info("visited")
+                    result.append(current_node.get_key())
+                    break
+            temp = stack.pop()
+            if not temp == current_node:
+                stack.append(temp)
         return result
 
     def ReversGraph(self):
