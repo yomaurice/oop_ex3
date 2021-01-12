@@ -89,3 +89,10 @@ class NodeData:
         else:
             i = len(self.destNi)
             self.destNi[i]=id
+
+    def __repr__(self):
+                return self.__str__()
+
+    def __str__(self):
+
+                return '{self._key}:{self._weight}'.format(self=self)

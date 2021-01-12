@@ -24,7 +24,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def dijkstra(self, src):
         self.fathers.update({src: None})
-        for i in self.gr.get_all_v():
+        for i in self.gr.vertices:
             self.gr.get_node(i).set_weight(float('inf'))
             self.gr.get_node(i).set_info("unvisited")
         # q=list[node]
@@ -142,7 +142,7 @@ class GraphAlgo(GraphAlgoInterface):
         return None
 
     def plot_graph(self):
-        for vert in self.gr.get_all_v():
+        for vert in self.gr.vertices:
             p = self.gr.get_node(vert).get_location()
             x = p[0]
             y = p[1]
@@ -184,7 +184,7 @@ class GraphAlgo(GraphAlgoInterface):
         new_graph: DiGraph  # define new graph type
         edge: edge_data
         new_graph = DiGraph()
-        for node in self.gr.get_all_v():
+        for node in self.gr.vertices:
             new_graph.add_node(node)
         for edge in self.gr.get_edges():
             src = edge.get_src_node()

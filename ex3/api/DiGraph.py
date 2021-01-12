@@ -108,8 +108,10 @@ class DiGraph (GraphInterface):
     def get_edges(self):
         return self.edges
 
-    '''def __repr__(self):
+    def __repr__(self):
         return self.__str__()
 
     def __str__(self):
-        return "Graph: |V|=", self.nodeCounter, "|E|=", self.edgeCounter'''
+        return 'Graph: |V|= {self.nodeCounter}, |E|= {self.edgeCounter}'.format(self=self)
+        #s = str(st)
+        #return s
