@@ -49,8 +49,8 @@ class GraphAlgo(GraphAlgoInterface):
                     dest_edge=i.get_key()
                     edge_w=self.gr.get_edge(src_edge,dest_edge ).get_weight()
                 if i_weight > nod_weight+edge_w:
-                    i.set_weight(nod_weight+edge_w)
-                    self.fathers[i] = top
+                    (self.gr.get_node(i.get_key())).set_weight(nod_weight+edge_w)
+                    self.fathers[i.get_key()] = top
         return True
 
     def shortest_path(self, id1, id2):
@@ -65,8 +65,10 @@ class GraphAlgo(GraphAlgoInterface):
                 st.append(dest)
                 dest = self.fathers.get(dest)
             li = []
-            while not st:
-                li.append(st.pop)
+            while not len(st) == 0:
+                temp = st.pop
+                li.append(temp)
+                st.remove(st[0])
             dist = self.gr.get_node(id2).get_weight()
             res = (dist, li)
             return res
