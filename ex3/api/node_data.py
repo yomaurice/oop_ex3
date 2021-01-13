@@ -94,5 +94,4 @@ class NodeData:
                 return self.__str__()
 
     def __str__(self):
-
                 return '{self._key}:{self._weight}'.format(self=self)

@@ -31,13 +31,11 @@ class GraphAlgo(GraphAlgoInterface):
         # q=list[node]
         q = PriorityQueue()
         src.set_info("visiting")
-        src.set_weight(0)
+        src.set_weight(0.0)
         q.put(src)
         self.nodeCounter += 1
-        while not q.empty():
+        while not (q.empty()):
             top = q.get()
-            #nod = top(1)
-            #nod.set_info("visited")
             ni = top.get_src_Ni()
             for i in ni:
                 if i.get_info() == "unvisited":
@@ -49,9 +47,9 @@ class GraphAlgo(GraphAlgoInterface):
                     src_edge=top.get_key()
                     dest_edge=i.get_key()
                     edge_w=self.gr.get_edge(src_edge,dest_edge ).get_weight()
-                if i_weight > nod_weight+edge_w:
-                    (self.gr.get_node(i.get_key())).set_weight(nod_weight+edge_w)
-                    self.fathers[i.get_key()] = top
+                if i.get_weight() > top.get_weight()+self.gr.get_edge(top.get_key(),i.get_key()).get_weight():
+                    (self.gr.get_node(i.get_key())).set_weight(top.get_weight()+self.gr.get_edge(top.get_key(),i.get_key()).get_weight())
+                    self.fathers[i] = top
         return True
 
     def shortest_path(self, id1, id2):
@@ -62,11 +60,13 @@ class GraphAlgo(GraphAlgoInterface):
             st = []
             self.dijkstra(src)
             dest = self.gr.get_node(id2)
-            while not (dest == src) and not st:
-                st.append(dest)
+            st.append(dest)
+            while not (dest == src) and st:
+                if not (len(st)==1):
+                    st.append(dest)
                 dest = self.fathers.get(dest)
             li = []
-            while not len(st) == 0:
+            while st:
                 temp = st.pop
                 li.append(temp)
                 st.remove(st[0])

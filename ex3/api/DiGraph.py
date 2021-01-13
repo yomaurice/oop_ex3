@@ -61,10 +61,18 @@ class DiGraph (GraphInterface):
         return self.vertices
 
     def all_in_edges_of_node(self, id1):
-        return self.get_node(id1).get_src_Ni
+        if self.vertices.get(id1).destNi.values():
+            di=dict()
+            for i in self.vertices.get(id1).destNi.values():
+                di[i] = self.get_edge(id1,i.get_key()).get_weight()
+        return di
 
     def all_out_edges_of_node(self, id1):
-        return self.get_node(id1).get_dest_Ni
+        if self.vertices.get(id1).srcNi.values():
+            di = dict()
+            for i in self.vertices.get(id1).srcNi.values():
+                di[i] = self.get_edge(id1, i.get_key()).get_weight()
+        return di
 
     def get_mc(self):
         return self.mc
@@ -113,5 +121,3 @@ class DiGraph (GraphInterface):
 
     def __str__(self):
         return 'Graph: |V|= {self.nodeCounter}, |E|= {self.edgeCounter}'.format(self=self)
-        #s = str(st)
-        #return s
