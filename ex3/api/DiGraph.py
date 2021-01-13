@@ -5,7 +5,7 @@ from api import node_data
 from api.GraphInterface import GraphInterface
 
 
-class DiGraph (GraphInterface):
+class DiGraph(GraphInterface):
 
     def __init__(self):
         self.vertices = dict()
@@ -36,13 +36,13 @@ class DiGraph (GraphInterface):
             return None
 
     def add_node(self, node_id, pos=None):
-        if not(node_id in self.vertices.keys()):
+        if not (node_id in self.vertices.keys()):
             node = node_data.NodeData(node_id)
             if pos is not None:
                 node.set_location(pos)
             else:
-                x = (random.randrange(350000000000, 360000000000)/10000000000)
-                y = (random.randrange(320000000000, 330000000000)/10000000000)
+                x = (random.randrange(350000000000, 360000000000) / 10000000000)
+                y = (random.randrange(320000000000, 330000000000) / 10000000000)
                 z = 0
                 pos1 = (x, y, z)
                 node.set_location(pos1)
@@ -62,9 +62,9 @@ class DiGraph (GraphInterface):
 
     def all_in_edges_of_node(self, id1):
         if self.vertices.get(id1).destNi.values():
-            di=dict()
+            di = dict()
             for i in self.vertices.get(id1).destNi.values():
-                di[i] = self.get_edge(id1,i.get_key()).get_weight()
+                di[i] = self.get_edge(id1, i.get_key()).get_weight()
         return di
 
     def all_out_edges_of_node(self, id1):
@@ -78,7 +78,7 @@ class DiGraph (GraphInterface):
         return self.mc
 
     def add_edge(self, id1, id2, weight):
-        if not(id1 in self.vertices) and not(id2 in self.vertices):
+        if not (id1 in self.vertices) and not (id2 in self.vertices):
             return False
         edge = edge_data.EgdeData(id1, id2, weight)
         if edge in self.edges:
@@ -91,7 +91,7 @@ class DiGraph (GraphInterface):
             return True
 
     def remove_node(self, node_id):
-        if not(node_id in self.vertices):
+        if not (node_id in self.vertices):
             return False
         else:
             i = self.vertices.get(node_id)

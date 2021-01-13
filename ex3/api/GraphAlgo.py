@@ -83,7 +83,14 @@ class GraphAlgo(GraphAlgoInterface):
         with open(file_name) as f:
             data = json.load(f)
         for node in data['Nodes']:
-            self.gr.add_node(node['id'])
+            if 'pos' in node:
+                p = node['pos']
+                pos_list = p.split(',')
+                pos_float = [float(x) for x in pos_list]
+                tup_pos = (pos_float[0], pos_float[1], pos_float[2])
+                self.gr.add_node(node['id'], tup_pos)
+            else:
+                self.gr.add_node(node['id'])
             # self.gr.vertices[self.gr.nodeCounter] = node_data.NodeData(node['id'])
             # self.gr.nodeCounter += 1
         for edge in data['Edges']:
@@ -94,30 +101,30 @@ class GraphAlgo(GraphAlgoInterface):
             # self.gr.edges.append(edge['src'], edge['dest'], edge['w'])
 
     def save_to_json(self, file_name):
-        with open(file_name) as f:
-            ver_dic = dict()
-            for ver in self.gr.vertices.keys():
-                ver_dic['key'] = ver
-            # json.dumps(ver_dic)
-            ver_list = []
-            for v in ver_dic:
-                ver_list.append(v)
-            edge_dict = dict()
-            for ed in self.gr.edges:
-                edge_dict['src'] = ed.get_src_node()
-                edge_dict['dest'] = ed.get_dest_node()
-                edge_dict['w'] = ed.get_weight()
-                # json.dumps(ed.get_src_node())
-                # json.dumps(ed.get_dest_node())
-                # json.dumps(ed.get_wight())
-            edge_list = []
-            for e in edge_dict:
-                edge_list.append(e)
-            json_dict = dict()
-            json_dict["Edges"] = edge_list
-            json_dict["Nodes"] = ver_list
-            json.dumps(json_dict)
-        return file_name
+        ver_dic = dict()
+        for ver in self.gr.vertices.keys():
+            ver_dic['key'] = ver
+        # json.dumps(ver_dic)
+        ver_list = []
+        for v in ver_dic:
+            ver_list.append(v)
+        edge_dict = dict()
+        for ed in self.gr.edges:
+            edge_dict['src'] = ed.get_src_node()
+            edge_dict['dest'] = ed.get_dest_node()
+            edge_dict['w'] = ed.get_weight()
+            # json.dumps(ed.get_src_node())
+            # json.dumps(ed.get_dest_node())
+            # json.dumps(ed.get_wight())
+        edge_list = []
+        for e in edge_dict:
+            edge_list.append(e)
+        json_dict = dict()
+        json_dict["Edges"] = edge_list
+        json_dict["Nodes"] = ver_list
+        with open(file_name, 'w') as f:
+            json.dump(json_dict, f)
+        return True
 
     def connected_component(self, id1):
         if id1 in self.gr.vertices:
