@@ -94,9 +94,8 @@ class DiGraph(GraphInterface):
         if not (node_id in self.vertices):
             return False
         else:
-            i = self.vertices.get(node_id)
-            # self.vertices.__delattr__(str(node_id))
-            del i
+            del self.vertices[node_id]
+            self.nodeCounter -=1
 
     def remove_edge(self, node_id1, node_id2):
         if self.has_edge(node_id1, node_id2):

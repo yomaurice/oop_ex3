@@ -22,10 +22,35 @@ class TestDiGraph (unittest.TestCase):
         self.g.add_edge(4, 1, 5)
         self.g.add_edge(1, 4, 5)
 
-    def test_1(self):
+    def test_1_1(self):
         self.build_graph()
         self.assertEqual(self.g.nodeCounter, 5)
 
+    def test_1_2(self):
+        self.build_graph()
+        self.g.remove_node(2)
+        self.assertEqual(self.g.nodeCounter, 4)
+
+    def test_1_3(self):
+        self.build_graph()
+        self.g.remove_node(2)
+        self.assertEqual(len(self.g.vertices), 4)
+
+    def test_1_4(self):
+        self.build_graph()
+        self.assertEqual(self.g.edgeCounter, 12)
+
+    def test_1_5(self):
+        self.build_graph()
+        self.assertEqual(len(self.g.edges), 12)
+
+    def test_2_1(self):
+        self.g = DiGraph()
+        for x in range(1000000):
+            self.g.add_node(x)
+        for y in range(500000):
+            self.g.add_edge(y, y+2, y*3)
+        self.assertEqual(len(self.g.vertices), 1000000)
 
     '''def test_isupper(self):
         self.assertTrue('FOO'.isupper())
