@@ -12,7 +12,7 @@ from api.GraphAlgo import GraphAlgo
 #       self.g = nx.Graph()
 # def load_from_json(self, filename):\
 
-file = "../data/A5"
+file = "../data/G_30000_240000_1.json"
 '''with open(file) as f:
     js_graph = json.load(f)
     g = json_graph.node_link_graph(js_graph)'''
@@ -37,16 +37,16 @@ for edge in data['Edges']:
     w = edge['w']
     dest = edge['dest']
     g.add_edge(src, dest, weight=w)
-print(type(g))
-nx.draw(g)
-plt.show()
+# print(type(g))
+# nx.draw(g)
+# plt.show()
 
 
 def short_pass():
-    nx.shortest_path(g, source=1, target=7)
+    nx.shortest_path(g, source=1, target=7, weight='weight', method='dijkstra')
     # start_node = 1
     # end_node = 7
-    # shortest_path = nx.shortest_path(g, source=start_node, target=end_node)
+    # shortest_path = nx.shortest_path(g, source=1, target=7,weight='weight', method='dijkstra')
     # print(shortest_path)
     # shortest_path_dist = nx.shortest_path_length(g, source=start_node, target=end_node)
     # print(shortest_path_dist)
