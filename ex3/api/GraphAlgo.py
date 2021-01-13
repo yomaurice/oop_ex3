@@ -162,6 +162,8 @@ class GraphAlgo(GraphAlgoInterface):
             x = p[0]
             y = p[1]
             plt.plot(x, y, color='blue', marker='o')
+            text = self.gr.get_node(vert).get_key()
+            plt.annotate(text, (x, y))
         for edge in self.gr.edges:
             src = edge.get_src_node()
             p_src = self.gr.get_node(src).get_location()
