@@ -23,10 +23,10 @@ class GraphAlgo(GraphAlgoInterface):
         return self.gr
 
     def dijkstra(self, src):
-        self.fathers.update({src: None})
+        # self.fathers.update({src: None})
         for i in self.gr.vertices:
             self.gr.get_node(i).set_weight(float('inf'))
-            # self.fathers[i] = None
+            self.fathers[self.gr.get_node(i)] = None
             self.gr.get_node(i).set_info("unvisited")
         # q=list[node]
         q = PriorityQueue()
@@ -42,11 +42,11 @@ class GraphAlgo(GraphAlgoInterface):
                     q.put(i)
                     self.nodeCounter += 1
                     i.set_info("visiting")
-                    nod_weight=top.get_weight()
+                    nod_weight = top.get_weight()
                     i_weight = i.get_weight()
-                    src_edge=top.get_key()
-                    dest_edge=i.get_key()
-                    edge_w=self.gr.get_edge(src_edge,dest_edge ).get_weight()
+                    src_edge = top.get_key()
+                    dest_edge = i.get_key()
+                    edge_w = self.gr.get_edge(src_edge, dest_edge).get_weight()
                     if i_weight > nod_weight+edge_w:
                         (self.gr.get_node(i.get_key())).set_weight(nod_weight+edge_w)
                         self.fathers[i] = top
@@ -63,12 +63,13 @@ class GraphAlgo(GraphAlgoInterface):
             dest = self.gr.get_node(id2)
             # st.append(dest.get_key())
             while not (dest == src):
-                st.append(dest.get_key())
                 if self.fathers.get(dest) is not None:
+                    st.append(dest.get_key())
                     dest = self.fathers.get(dest)
                 else:
                     break
-            st.append(src.get_key())
+            if st:
+                st.append(src.get_key())
             li = []
             while st:
                 temp = st.pop()
@@ -87,8 +88,8 @@ class GraphAlgo(GraphAlgoInterface):
             # self.gr.nodeCounter += 1
         for edge in data['Edges']:
             src = edge['src']
-            dest = edge['dest']
             w = edge['w']
+            dest = edge['dest']
             self.gr.add_edge(src, dest, w)
             # self.gr.edges.append(edge['src'], edge['dest'], edge['w'])
 
@@ -125,8 +126,7 @@ class GraphAlgo(GraphAlgoInterface):
             for l1 in list_components:
                 for l2 in l1:
                     if id1 == l2:
-                        result = l1
-            return result
+                        return l1
         return None
 
     def connected_components(self):

@@ -86,7 +86,7 @@ def check2():
     print(g_algo.connected_component(0))
     print(g_algo.connected_components())
     g_algo.plot_graph()
-    print("End chek 3")
+    print("End chek 2")
 
 
 
