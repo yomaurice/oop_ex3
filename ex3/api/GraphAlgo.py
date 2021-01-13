@@ -38,7 +38,7 @@ class GraphAlgo(GraphAlgoInterface):
             top = q.get()
             ni = top.get_src_Ni()
             for i in ni:
-                if i.get_info() == "unvisited":
+                if not (i.get_info() == "visited"):
                     q.put(i)
                     self.nodeCounter += 1
                     i.set_info("visiting")
@@ -47,9 +47,10 @@ class GraphAlgo(GraphAlgoInterface):
                     src_edge=top.get_key()
                     dest_edge=i.get_key()
                     edge_w=self.gr.get_edge(src_edge,dest_edge ).get_weight()
-                if i.get_weight() > top.get_weight()+self.gr.get_edge(top.get_key(),i.get_key()).get_weight():
-                    (self.gr.get_node(i.get_key())).set_weight(top.get_weight()+self.gr.get_edge(top.get_key(),i.get_key()).get_weight())
-                    self.fathers[i] = top
+                    if i_weight > nod_weight+edge_w:
+                        (self.gr.get_node(i.get_key())).set_weight(nod_weight+edge_w)
+                        self.fathers[i] = top
+            self.gr.get_node(top.get_key()).set_info("visited")
         return True
 
     def shortest_path(self, id1, id2):
@@ -60,16 +61,19 @@ class GraphAlgo(GraphAlgoInterface):
             st = []
             self.dijkstra(src)
             dest = self.gr.get_node(id2)
-            st.append(dest)
-            while not (dest == src) and st:
-                if not (len(st)==1):
-                    st.append(dest)
-                dest = self.fathers.get(dest)
+            # st.append(dest.get_key())
+            while not (dest == src):
+                st.append(dest.get_key())
+                if self.fathers.get(dest) is not None:
+                    dest = self.fathers.get(dest)
+                else:
+                    break
+            st.append(src.get_key())
             li = []
             while st:
-                temp = st.pop
+                temp = st.pop()
                 li.append(temp)
-                st.remove(st[0])
+                # st.remove(st[0])
             dist = self.gr.get_node(id2).get_weight()
             res = (dist, li)
             return res
@@ -86,8 +90,7 @@ class GraphAlgo(GraphAlgoInterface):
             dest = edge['dest']
             w = edge['w']
             self.gr.add_edge(src, dest, w)
-           # self.gr.edges.append(edge['src'], edge['dest'], edge['w'])
-            self.gr.edgeCounter += 1
+            # self.gr.edges.append(edge['src'], edge['dest'], edge['w'])
 
     def save_to_json(self, file_name):
         with open(file_name) as f:
@@ -130,6 +133,8 @@ class GraphAlgo(GraphAlgoInterface):
         if self.gr is not None:
             vertex = self.gr.vertices
             src = vertex.get(0).get_key()
+            for n in self.gr.vertices.values():
+                n.set_info("unvisited")
             list_comp = self.dfs(src)
             self.ReversGraph()
             for n in self.gr.vertices.values():  # i need to check if we need this
@@ -165,27 +170,24 @@ class GraphAlgo(GraphAlgoInterface):
 
     def dfs(self, n_id):
         node = self.gr.get_node(n_id)
-        for n in self.gr.vertices.values():
-            n.set_info("unvisited")
         stack = []
         result = []
         stack.append(node)
-        result.append(node.get_key())
+        # result.append(node.get_key())
         node.set_info("visited")
         while stack:
-            current_node = stack.pop()
-            stack.append(current_node)
+            current_node = stack.pop(0)
+            result.append(current_node.get_key())
+            # stack.append(current_node)
             # print(current_node)
             ni = current_node.get_src_Ni()
             for nod in ni:
-                if nod.get_info == "unvisited":
+                if nod.get_info() == "unvisited":
                     stack.append(nod)
                     nod.set_info("visited")
-                    result.append(current_node.get_key())
-                    break
-            temp = stack.pop()
+            '''temp = stack.pop()
             if not temp == current_node:
-                stack.append(temp)
+                stack.append(temp)'''
         return result
 
     def ReversGraph(self):
@@ -198,8 +200,8 @@ class GraphAlgo(GraphAlgoInterface):
             src = edge.get_src_node()
             dest = edge.get_dest_node()
             w = edge.get_weight()
-            new_graph.add_edge(src, dest, w)
-        return new_graph
+            new_graph.add_edge(dest, src, w)
+        self.gr = new_graph
 
 
 '''def dijkstra(self,node):
