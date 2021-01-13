@@ -6,7 +6,7 @@ import unittest
 
 class TestDiGraph (unittest.TestCase):
 
-    def builed_graph(self):
+    def build_graph(self):
         self.g = DiGraph()
         for x in range(5):
             self.g.add_node(x)
@@ -24,10 +24,10 @@ class TestDiGraph (unittest.TestCase):
         self.g.add_edge(1, 4, 5)
         return self.g
 
-
     def test_1(self):
-        self.g = self.builed_graph()
+        self.g = self.build_graph()
         self.ga = GraphAlgo(self.g)
+        self.ga.plot_graph()
         print(self.ga.shortest_path(0,4))
         self.assertEqual(self.ga.shortest_path(0,4), (10,[0,1,4]))
         '''self.ga.gr.remove_edge(1,4)
@@ -35,7 +35,8 @@ class TestDiGraph (unittest.TestCase):
         self.assertEqual(self.ga.shortest_path(0, 4), (15, [0, 2, 3, 4]))'''
 
     def test_2(self):
-        self.g = self.builed_graph()
+        self.g = self.build_graph()
         self.ga = GraphAlgo(self.g)
+        self.ga.plot_graph()
         print(self.ga.connected_component(1))
-        #self.assertEqual(self.ga.shortest_path(0,4), (10,[0,1,4]))
+        # self.assertEqual(self.ga.shortest_path(0,4), (10,[0,1,4]))
