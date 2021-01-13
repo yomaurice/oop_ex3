@@ -5,10 +5,8 @@ import unittest
 
 class TestDiGraph (unittest.TestCase):
 
-    def __init__(self):
-        self.g = DiGraph()
-
     def build_graph(self):
+        self.g = DiGraph()
         for x in range(5):
             self.g.add_node(x)
         self.g.add_edge(0, 1, 5)
@@ -27,6 +25,7 @@ class TestDiGraph (unittest.TestCase):
     def test_1(self):
         self.build_graph()
         self.assertEqual(self.g.nodeCounter, 5)
+
 
     '''def test_isupper(self):
         self.assertTrue('FOO'.isupper())

@@ -17,7 +17,7 @@ file = "../data/A5"
     js_graph = json.load(f)
     g = json_graph.node_link_graph(js_graph)'''
 
-g=nx.Graph()
+g = nx.Graph()
 
 with open(file) as f:
     data = json.load(f)
