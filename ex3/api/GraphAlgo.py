@@ -164,9 +164,10 @@ class GraphAlgo(GraphAlgoInterface):
 
     def plot_graph(self):
         for vert in self.gr.vertices:
-            p = self.gr.get_node(vert).get_location()
-            x = p[0]
-            y = p[1]
+            node = self.gr.get_node(vert)
+            pos = node.get_location()
+            x = pos[0]
+            y = pos[1]
             plt.plot(x, y, color='blue', marker='o')
             text = self.gr.get_node(vert).get_key()
             plt.annotate(text, (x, y))
@@ -220,7 +221,8 @@ class GraphAlgo(GraphAlgoInterface):
         edge: edge_data
         new_graph = DiGraph()
         for node in self.gr.vertices:
-            new_graph.add_node(node)
+            pos = self.gr.get_node(node).get_location()
+            new_graph.add_node(node, pos)
         for edge in self.gr.get_edges():
             src = edge.get_src_node()
             dest = edge.get_dest_node()

@@ -37,10 +37,11 @@ class DiGraph(GraphInterface):
 
     def add_node(self, node_id, pos=None):
         if not (node_id in self.vertices.keys()):
-            node = node_data.NodeData(node_id)
             if pos is not None:
-                node.set_location(pos)
+                node = node_data.NodeData(node_id, pos)
+                # node.set_location(pos)
             else:
+                node = node_data.NodeData(node_id)
                 x = (random.randrange(350000000000, 360000000000) / 10000000000)
                 y = (random.randrange(320000000000, 330000000000) / 10000000000)
                 z = 0

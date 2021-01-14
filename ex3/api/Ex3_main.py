@@ -65,7 +65,6 @@ def check1():
     print("End chek 1")
 
 
-
 def check2():
     """ This function tests the naming, basic testing over A5 json file.
       :return:
@@ -87,7 +86,6 @@ def check2():
     print(g_algo.connected_components())
     g_algo.plot_graph()
     print("End chek 2")
-
 
 
 if __name__ == '__main__':
