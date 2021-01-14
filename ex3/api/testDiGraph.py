@@ -1,3 +1,5 @@
+from random import random
+
 from api.DiGraph import DiGraph
 
 import unittest
@@ -42,26 +44,72 @@ class TestDiGraph (unittest.TestCase):
 
     def test_1_5(self):
         self.build_graph()
+        self.g.add_node(5)
+        self.assertEqual(len(self.g.vertices), 6)
+
+    def test_1_6(self):
+        self.build_graph()
         self.assertEqual(len(self.g.edges), 12)
+        self.g.remove_edge(0, 4)
+        self.assertEqual(len(self.g.edges), 11)
+
+
+    def test_1_7(self):
+        self.build_graph()
+        self.assertEqual(self.g.get_all_v().keys(), {0,1,2,3,4})
+
+    def test_1_8(self):
+        self.build_graph()
+        self.assertEqual(str(self.g.get_edge(0,4)), '0:4,20')
+
+    def test_1_9(self):
+        self.build_graph()
+        self.assertEqual(str(self.g.get_node(4)), '4:0.0')
+
+    def test_1_10(self):
+        self.build_graph()
+        self.assertEqual(self.g.v_size(), 5)
+
+    def test_1_11(self):
+        self.build_graph()
+        self.assertEqual(self.g.e_size(), 12)
+
+    def test_1_12(self):
+        self.build_graph()
+        self.g.add_node(6)
+        self.assertEqual(str(self.g.get_node1(6)), '6:0.0')
+
+    def test_1_13(self):
+        self.build_graph()
+        self.assertEqual(str(self.g.all_in_edges_of_node(1)), '{0:0.0: 8, 4:0.0: 5}')
+
+    def test_1_14(self):
+        self.build_graph()
+        self.assertEqual(str(self.g.all_out_edges_of_node(2)), '{0:0.0: 1, 3:0.0: 1}')
+
+    def test_1_15(self):
+        self.build_graph()
+        self.assertEqual(self.g.get_mc(), 17)
+
+    def test_1_16(self):
+        self.build_graph()
+        self.assertTrue(self.g.has_edge(0,4))
+        self.g.remove_edge(0, 4)
+        self.assertFalse(self.g.has_edge(0, 4))
+        self.assertFalse(self.g.has_edge(0, 8))
+        self.assertTrue(self.g.has_edge(4, 0))
+
 
     def test_2_1(self):
         self.g = DiGraph()
         for x in range(1000000):
             self.g.add_node(x)
-        for y in range(500000):
-            self.g.add_edge(y, y+2, y*3)
+        '''for y in range(1,500000):
+            self.g.add_edge(y, y+1, y)
+            #self.g.add_edge(random.randrange(0,100)/100000000,random.randrange(0,100)/100000000, random.randrange(0,200)/100000000)'''
         self.assertEqual(len(self.g.vertices), 1000000)
 
-    '''def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
 
-    def test_split(self):
-        s = 'hello world'
-        self.assertEqual(s.split(), ['hello', 'world'])
-        # check that s.split fails when the separator is not a string
-        with self.assertRaises(TypeError):
-            s.split(2)'''
 
 
 if __name__ == '__main__':

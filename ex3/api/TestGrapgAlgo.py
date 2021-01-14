@@ -39,4 +39,11 @@ class TestDiGraph (unittest.TestCase):
         self.ga = GraphAlgo(self.g)
         self.ga.plot_graph()
         print(self.ga.connected_component(1))
-        # self.assertEqual(self.ga.shortest_path(0,4), (10,[0,1,4]))
+        self.assertEqual(self.ga.connected_component(1), [0, 1, 2, 4, 3])
+
+    def test_3(self):
+        self.g = self.build_graph()
+        self.ga = GraphAlgo(self.g)
+        self.ga.plot_graph()
+        print(self.ga.connected_components())
+        self.assertEqual(self.ga.connected_components(), [[0, 1, 2, 4, 3]])

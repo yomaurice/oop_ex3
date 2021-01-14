@@ -48,6 +48,7 @@ class DiGraph(GraphInterface):
                 node.set_location(pos1)
             self.vertices[node_id] = node
             self.nodeCounter += 1
+            self.mc +=1
             return True
         return False
 
@@ -86,6 +87,7 @@ class DiGraph(GraphInterface):
         else:
             self.edges.append(edge)
             self.edgeCounter += 1
+            self.mc +=1
             self.vertices.get(id1).add_srcNi(self.vertices.get(id2))
             self.vertices.get(id2).add_destNi(self.vertices.get(id1))
             return True
@@ -96,6 +98,7 @@ class DiGraph(GraphInterface):
         else:
             del self.vertices[node_id]
             self.nodeCounter -=1
+            self.mc -=1
 
     def remove_edge(self, node_id1, node_id2):
         if self.has_edge(node_id1, node_id2):
@@ -103,6 +106,7 @@ class DiGraph(GraphInterface):
             # self.edges.__delattr__(str(i))
             self.edges.remove(i)
             self.edgeCounter -= 1
+            self.mc -=1
         else:
             return False
 
