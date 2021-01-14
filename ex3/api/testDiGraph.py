@@ -53,7 +53,6 @@ class TestDiGraph (unittest.TestCase):
         self.g.remove_edge(0, 4)
         self.assertEqual(len(self.g.edges), 11)
 
-
     def test_1_7(self):
         self.build_graph()
         self.assertEqual(self.g.get_all_v().keys(), {0,1,2,3,4})
@@ -99,7 +98,6 @@ class TestDiGraph (unittest.TestCase):
         self.assertFalse(self.g.has_edge(0, 8))
         self.assertTrue(self.g.has_edge(4, 0))
 
-
     def test_2_1(self):
         self.g = DiGraph()
         for x in range(1000000):
@@ -108,8 +106,6 @@ class TestDiGraph (unittest.TestCase):
             self.g.add_edge(y, y+1, y)
             #self.g.add_edge(random.randrange(0,100)/100000000,random.randrange(0,100)/100000000, random.randrange(0,200)/100000000)'''
         self.assertEqual(len(self.g.vertices), 1000000)
-
-
 
 
 if __name__ == '__main__':
