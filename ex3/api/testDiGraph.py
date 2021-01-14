@@ -93,7 +93,7 @@ class TestDiGraph (unittest.TestCase):
 
     def test_1_16(self):
         self.build_graph()
-        self.assertTrue(self.g.has_edge(0,4))
+        self.assertTrue(self.g.has_edge(0, 4))
         self.g.remove_edge(0, 4)
         self.assertFalse(self.g.has_edge(0, 4))
         self.assertFalse(self.g.has_edge(0, 8))

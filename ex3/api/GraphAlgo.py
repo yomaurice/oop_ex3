@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 class GraphAlgo(GraphAlgoInterface):
     # node: node_data # - define type of node
 
-    def __init__(self, g=None):
+    def __init__(self, g = None):
         self.fathers = dict({node_data: node_data})
         self.nodeCounter = 0
         if g is None:

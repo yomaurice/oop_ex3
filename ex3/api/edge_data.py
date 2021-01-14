@@ -36,7 +36,7 @@ class EgdeData:
         return self.__str__()
 
     def __str__(self):
-        return '{self._src_node}:{self._dest_node},{self._weight}'.format(self=self)
+        return '{self._src_node}:{self._dest_node}, {self._weight}'.format(self=self)
 
 
 

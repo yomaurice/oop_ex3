@@ -28,7 +28,6 @@ class TestDiGraph (unittest.TestCase):
         self.g = self.build_graph()
         self.ga = GraphAlgo(self.g)
         self.ga.plot_graph()
-        print(self.ga.shortest_path(0,4))
         self.assertEqual(self.ga.shortest_path(0,4), (10,[0,1,4]))
         '''self.ga.gr.remove_edge(1,4)
         print(self.ga.shortest_path(0, 4))
