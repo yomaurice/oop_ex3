@@ -3,7 +3,7 @@
 class NodeData:
     keyCounter = 0
 
-    def __init__(self, key = keyCounter, pos = None, info = "", tag = 0, weight = 0.0):
+    def __init__(self, key=keyCounter, _pos=(0, 0, 0), _info="", _tag=0, _weight=0.0):
         self._key = key
         self._info = ""
         self._tag = 0
@@ -11,6 +11,7 @@ class NodeData:
         self._weight = 0.0
         self.srcNi = dict()
         self.destNi = dict()
+        self._pos = _pos
 
     def get_key(self):
         return self._key
@@ -91,7 +92,7 @@ class NodeData:
             self.destNi[i]=id
 
     def __repr__(self):
-                return self.__str__()
+        return self.__str__()
 
     def __str__(self):
-                return '{self._key}:{self._weight}'.format(self=self)
+        return '{self._key}:{self._weight}'.format(self=self)
